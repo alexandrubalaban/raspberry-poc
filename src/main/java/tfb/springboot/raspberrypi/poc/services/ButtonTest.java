@@ -32,42 +32,6 @@ public class ButtonTest {
 
 
 
-        // setup gpio pins #04, #05, #06 as an output pins and make sure they are all LOW at startup
-//        GpioPinDigitalOutput myLed[] = {
-//                gpio.provisionDigitalOutputPin(RaspiPin.GPIO_04, "LED #1", PinState.LOW),
-//        };
-
-        // create a gpio control trigger on the input pin ; when the input goes HIGH, also set gpio pin #04 to HIGH
-
-//        myButton.addTrigger(new GpioSetStateTrigger(PinState.HIGH, myLed[0], PinState.HIGH));
-//
-//        // create a gpio control trigger on the input pin ; when the input goes LOW, also set gpio pin #04 to LOW
-    //    myButton.addTrigger(new GpioSetStateTrigger(PinState.LOW, myLed[0], PinState.LOW));
-
-        // create a gpio callback trigger on gpio pin#4; when #4 changes state, perform a callback
-        // invocation on the user defined 'Callable' class instance
-//        myButton.addTrigger(new GpioCallbackTrigger(new Callable<Void>() {
-//            public Void call() throws Exception {
-//                System.out.println(" --> GPIO TRIGGER CALLBACK RECEIVED ");
-//                return null;
-//            }
-//        }));
-
-//        myButton.addTrigger(new GpioCallbackTrigger(PinState.HIGH, new Callable<Void>() {
-//            public Void call() throws Exception {
-//                if(isLight ) {
-//
-//                    gpio.provisionDigitalOutputPin(RaspiPin.GPIO_04, "PinLED", PinState.LOW);
-//                    isLight = false;
-//                }else {
-//                    gpio.provisionDigitalOutputPin(RaspiPin.GPIO_04, "PinLED", PinState.HIGH);
-//                    isLight = true;
-//                }
-//                return null;
-//            }
-//        }));
-
-
         myButton.addListener(new GpioPinListenerDigital() {
             public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
 
