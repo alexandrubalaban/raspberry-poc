@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
+
 /**
  * Created by Sandu
  * on 04.06.2018
@@ -19,18 +21,20 @@ public class ButtonService {
 
     final GpioController gpio = GpioFactory.getInstance();
 
-    // provision gpio pin #02 as an input pin with its internal pull down resistor enabled
-    final GpioPinDigitalInput myButton = gpio.provisionDigitalInputPin(RaspiPin.GPIO_02,
+
+    final GpioPinDigitalInput myButton = gpio.provisionDigitalInputPin(RaspiPin.GPIO_05,
             PinPullResistance.PULL_DOWN);
 
     // creating the pin with parameter PinState.HIGH
     // will instantly power up the pin
-    final GpioPinDigitalOutput led = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_04, "PinLED", PinState.LOW);
+    final GpioPinDigitalOutput led = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_06, "PinLED", PinState.LOW);
 
-    public void pushButton() throws InterruptedException {
+    @PostConstruct
+    public void init() {
+        System.out.println("Init button listener");
         myButton.addListener(new GpioPinListenerDigital() {
             public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
-
+                System.out.println("buton apasat");
                 if (event.getState().equals(PinState.HIGH)) {
                     if (isLight) {
                         isLight = false;
@@ -43,15 +47,12 @@ public class ButtonService {
 
                 led.toggle();
 
-                // display pin state on console
+
                 System.out.println(" --> GPIO PIN STATE CHANGE: " + event.getPin() + " = " + event.getState());
             }
 
         });
-
-        // keep program running until user aborts (CTRL-C)
-        while (true) {
-            Thread.sleep(500);
-        }
     }
+
+
 }

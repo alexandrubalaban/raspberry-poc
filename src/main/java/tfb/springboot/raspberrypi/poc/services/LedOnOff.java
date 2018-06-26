@@ -15,28 +15,23 @@ public class LedOnOff {
 
     private GpioPinDigitalOutput led;
 
-    // create gpio controller
     private GpioController gpio;
 
-
-    @PostConstruct
-    public void init() {
+    {
+        System.out.println("In init +++++++++++++++++++++++++++++");
 
         gpio = GpioFactory.getInstance();
 
-        // creating the pin with parameter PinState.HIGH
-        // will instantly power up the pin
-        led = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_04, "PinLED", PinState.LOW);
-
+        led = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_03, "PinLED", PinState.LOW);
     }
 
     public void turnOn() {
         led.high();
-        led.toggle();
+        System.out.println("we put HIGH");
     }
 
     public void turnOff() {
         led.low();
-        led.toggle();
+        System.out.println("we put LOW");
     }
 }

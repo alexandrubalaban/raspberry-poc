@@ -13,22 +13,22 @@ public class ButtonTest {
 
     public static void main(String[] args) throws InterruptedException {
 
-        //boolean isLight = false;
 
         System.out.println("<--Pi4J--> GPIO Trigger Example ... started.");
 
-        // create gpio controller
         final GpioController gpio = GpioFactory.getInstance();
 
-        // provision gpio pin #02 as an input pin with its internal pull down resistor enabled
+
         final GpioPinDigitalInput myButton = gpio.provisionDigitalInputPin(RaspiPin.GPIO_02,
                 PinPullResistance.PULL_DOWN);
 
-        // creating the pin with parameter PinState.HIGH
-        // will instantly power up the pin
+
         final GpioPinDigitalOutput led = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_04, "PinLED", PinState.LOW);
 
         System.out.println(" ... complete the GPIO #02 circuit and see the triggers take effect.");
+
+
+
 
 
 
@@ -47,20 +47,16 @@ public class ButtonTest {
 
                 led.toggle();
 
-                // display pin state on console
+
                 System.out.println(" --> GPIO PIN STATE CHANGE: " + event.getPin() + " = " + event.getState());
             }
 
         });
 
-        // keep program running until user aborts (CTRL-C)
         while (true) {
             Thread.sleep(500);
         }
 
-        // stop all GPIO activity/threads by shutting down the GPIO controller
-        // (this method will forcefully shutdown all GPIO monitoring threads and scheduled tasks)
-        // gpio.shutdown();   <--- implement this method call if you wish to terminate the Pi4J GPIO controller
     }
 }
 

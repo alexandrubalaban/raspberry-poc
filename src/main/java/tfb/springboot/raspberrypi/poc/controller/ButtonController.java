@@ -8,7 +8,7 @@ import tfb.springboot.raspberrypi.poc.services.ButtonService;
  * Created by Sandu
  * on 04.06.2018
  */
-@RestController
+//@RestController
 public class ButtonController {
 
     @Autowired
