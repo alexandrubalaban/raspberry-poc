@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymelefe.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Raspberry Pi SmartHome</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"
+          integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"
+            integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.15.3/axios.min.js"></script>
+    <link href="/css/style.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row  justify-content-md-center">
+        <div class="col-5">
+            <div class="panel panel-primary">
+
+                <div class="panel-heading">
+                    <h1>My Sensors!</h1>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="card">
+                                        <img id="led-on-off" class="card-img-top" src="/images/LedOff.png" alt="Card image cap">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Light On/Off</h5>
+                                            <p class="card-text">A simple led that will take roll of light in home.</p>
+                                        </div>
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">State</li>
+                                            <li class="list-group-item">State</li>
+                                        </ul>
+                                        <div class="card-body">
+                                            <a id="btn-led" href="#" class="btn btn-success btn-block">Toggle</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="card">
+                                        <img class="card-img-top" src="/images/photoresistor.png" alt="Card image cap">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Photoresistor</h5>
+                                            <p class="card-text">Photoresistor, with this sensor you can know intensity level in your home</p>
+                                        </div>
+                                        <ul class="list-group list-group-flush">
+                                            <li id="light-lux" class="list-group-item">State</li>
+                                            <li id="light-lux-poll" class="list-group-item">State</li>
+                                        </ul>
+                                        <div class="card-body">
+                                            <a id="btn-light-lux" href="#" class="btn btn-success btn-block">Get Luminosity</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="card">
+                                        <img class="card-img-top" src="/images/Thermistor.png" alt="Card image cap">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Thermistor</h5>
+                                            <p class="card-text">Display the curent temperature in this room.</p>
+                                        </div>
+                                        <ul class="list-group list-group-flush">
+                                            <li id="temperature-data" class="list-group-item">Push the button to get temperature details</li>
+                                        </ul>
+                                        <div class="card-body">
+                                            <a id="btn-temperature" href="#" class="btn btn-success btn-block">Get Temp</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="card">
+                                        <img class="card-img-top" src="/images/senc.svg" alt="Card image cap">
+                                        <div class="card-body">
+                                            <h5 class="card-title">RGB</h5>
+                                            <p class="card-text">In progress</p>
+                                        </div>
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">Cras justo odio</li>
+                                        </ul>
+                                        <div class="card-body">
+                                            <a href="#" class="btn btn-success btn-block">Change color</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--<div class="table-responsive">-->
+                    <!--<table class="table table-hover">-->
+                    <!--<thead class="thead-inverse">-->
+                    <!--<tr>-->
+                    <!--<th>Name</th>-->
+                    <!--<th>Description</th>-->
+                    <!--</tr>-->
+                    <!--</thead>-->
+                    <!--<tr th:remove="all">-->
+                    <!--<td th:text="${}">Luminosity</td>-->
+                    <!--<td th:text="${}">You can see the amoun of light in the respective room</td>-->
+                    <!--</tr>-->
+                    <!--<tr th:remove="all">-->
+                    <!--<td th:text="${}">Luminosity</td>-->
+                    <!--<td th:text="${}">You can see the amoun of light in the respective room</td>-->
+                    <!--</tr>-->
+                    <!--<tr th:each="sensors : ${sensors}">-->
+                    <!--<td th:text="${sensor.getName}">Luminosity</td>-->
+                    <!--<td th:text="${sensor.getDescription}">You can see the amoun of light in the respective-->
+                    <!--room-->
+                    <!--</td>-->
+                    <!--</tr>-->
+                    <!--</table>-->
+                    <!--</div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $('document').ready(function(){
+
+        $('#btn-led').click(e => {
+            e.preventDefault();
+        const urlOn = 'http://192.168.0.2:8080/led/turnOn';
+        const urlOff = 'http://192.168.0.2:8080/led/turnOff';
+        axios.get(urlOn).then(response => console.log(response));
+        axios.get(urlOff).then(response => console.log(response));
+        if($('#led-on-off').hasClass('led-on')) {
+            axios.get(urlOff).then(response => {
+                console.log(response);
+            $('#led-on-off').attr('src', '/images/LedOff.png');
+            $('#led-on-off').toggleClass('led-on');
+        });
+        } else {
+            axios.get(urlOn).then(response => {
+                console.log(response);
+            $('#led-on-off').attr('src', '/images/LedOn.png');
+            $('#led-on-off').toggleClass('led-on');
+        });
+        }
+    });
+
+        $('#btn-light-lux').click(e => {
+            e.preventDefault();
+        const urlLight = 'http://192.168.0.2:8080/sensors/luminosity';
+        axios.get(urlLight).then(response => {
+            console.log(response);
+        $('#light-lux').text(response.data);
+    });
+    });
+
+        $('#btn-temperature').click(e => {
+            e.preventDefault();
+        const urlTemperature = 'http://192.168.0.2:8080/sensorsTemp/temp';
+        axios.get(urlTemperature).then(response => {
+            console.log(response);
+        $('#temperature-data').text(response.data);
+    });
+    });
+
+        setInterval(() => {
+            const urlLightPoll = 'http://192.168.0.2:8080/sensors/luminosity';
+        axios.get(urlLightPoll).then(response => {
+            console.log(response);
+        $('#light-lux-poll').text(response.data);
+    });
+    }, 3000)
+
+
+
+    });
+</script>
+</body>
+</html>
